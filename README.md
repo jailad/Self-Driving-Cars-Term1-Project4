@@ -52,7 +52,7 @@ The goals / steps of this project are the following:
 * [project.ipynb](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.ipynb) - [Jupyter](http://jupyter.org/) notebook used to implement the pipeline.
 * [project.py](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py) - Python script version of the above notebook. ( useful for referencing specific file numbers )
 * [video.mp4](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project/project_video.mp4) - Video of the pipeline working on the project video.
-* [readme.md](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/README.md) - The accompanying Readme file, with setup details.
+* [challenge_images](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/tree/master/project/challenge_images) - A folder containing some challenging images extracted from the challenge videos.
 
 
 <BR><BR>

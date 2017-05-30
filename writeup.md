@@ -74,6 +74,7 @@ The goals / steps of this project are the following:
 * [writeup.md](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/writeup.md) - Report writeup file
 * [output_images folder](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/tree/master/project/output_images) - Folder with various images as generated from the pipeline.
 * [video.mp4](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project/project_video.mp4) - Video of the pipeline working on the project video.
+* [challenge_images](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/tree/master/project/challenge_images) - A folder containing some challenging images extracted from the challenge videos.
 
 <BR><BR>
 ---
