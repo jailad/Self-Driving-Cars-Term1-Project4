@@ -10,12 +10,12 @@
 [image6]: ./project/output_images/histogram.png "Histogram"
 [image7]: ./project/output_images/fit_lane_lines.png "Fit Lane Lines"
 [image8]: ./project/output_images/generate_lane_lines.png "Generate Lane Lines"
-[image9]: ./project/output_images/fill_lane_lines.png "Fill Lane Lines"
 [image10]: ./project/output_images/original_image_with_lanes.png "Original Image - with Lanes"
 [image11]: ./project/output_images/original_image_with_lanes_calculations.png "Original Image - with Calculations"
-[image12]: ./project/output_images/output.png "End-to-end Pipeline"
+[image13]: ./project/output_images/detect_lane_lines.png "Detect Lane Lines"
 
-[video1]: ./project/project_video_output3.mp4 "Project Video"
+[video1]: ./project/project_video_output.mp4 "Project Video"
+[video2]: ./project/harder_challenge_video_output_v2_2.mp4 "Harder Challenge Video"
 
 * A submission by Jai Lad
 
@@ -51,9 +51,9 @@ The goals / steps of this project are the following:
 * [writeup.md](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/writeup.md) - Report writeup file
 * [project.ipynb](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.ipynb) - [Jupyter](http://jupyter.org/) notebook used to implement the pipeline.
 * [project.py](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py) - Python script version of the above notebook. ( useful for referencing specific file numbers )
-* [video.mp4](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project/project_video.mp4) - Video of the pipeline working on the project video.
+* [pipeline video](https://youtu.be/kioah-E8Qr0) - Video of the pipeline working on the project video.
+* [harder challenge video](https://youtu.be/y8AIXO57M9c) - Video of the pipeline working on the harder challenge video.
 * [challenge_images](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/tree/master/project/challenge_images) - A folder containing some challenging images extracted from the challenge videos.
-
 
 <BR><BR>
 ---
@@ -133,6 +133,8 @@ The goals / steps of this project are the following:
 ### - Using weighted history.<a name="fw5"></a>
 * Currently, I am keeping a history of past 'X' valid left and right lane points. However, all of these are weighted equally. A better approach, would be to combine this history with a 'decay' mechanism, so that more recent value(s) are given a higher weight, relative to older valid entries.
 
+### - Handling temporary lack of lane data<a name="fw5"></a>
+* In the harder challenge video, towards the end, we temporarily have no right lane line. The pipeline would have to be adapted for this scenario because we currently assume that we should be able to threshold in a manner so as to yield a decent lane fit. 
 
 <BR><BR>
 ---

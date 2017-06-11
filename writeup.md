@@ -10,12 +10,14 @@
 [image6]: ./project/output_images/histogram.png "Histogram"
 [image7]: ./project/output_images/fit_lane_lines.png "Fit Lane Lines"
 [image8]: ./project/output_images/generate_lane_lines.png "Generate Lane Lines"
-[image9]: ./project/output_images/fill_lane_lines.png "Fill Lane Lines"
 [image10]: ./project/output_images/original_image_with_lanes.png "Original Image - with Lanes"
 [image11]: ./project/output_images/original_image_with_lanes_calculations.png "Original Image - with Calculations"
-[image12]: ./project/output_images/output.png "End-to-end Pipeline"
+[image13]: ./project/output_images/detect_lane_lines.png "Detect Lane Lines"
 
-[video1]: ./project/project_video_output3.mp4 "Project Video"
+
+[video1]: ./project/project_video_output.mp4 "Project Video"
+[video2]: ./project/harder_challenge_video_output_v2_2.mp4 "Harder Challenge Video"
+
 
 * A submission by Jai Lad
 
@@ -45,6 +47,7 @@
     3. [Adaptive smoothing.](#fw4)
     4. [Using Deep Learning for lane line prediction.](#fw3)
     5. [Using weighted history.](#fw5)
+    6. [Handling temporary lack of lane data.](#fw6)
 
 <BR><BR>
 ---
@@ -73,7 +76,8 @@ The goals / steps of this project are the following:
 * [project.py](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py) - Python script version of the above notebook. ( useful for referencing specific file numbers )
 * [writeup.md](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/writeup.md) - Report writeup file
 * [output_images folder](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/tree/master/project/output_images) - Folder with various images as generated from the pipeline.
-* [video.mp4](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project/project_video.mp4) - Video of the pipeline working on the project video.
+* [pipeline video](https://youtu.be/kioah-E8Qr0) - Video of the pipeline working on the project video.
+* [harder challenge video](https://youtu.be/y8AIXO57M9c) - Video of the pipeline working on the harder challenge video.
 * [challenge_images](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/tree/master/project/challenge_images) - A folder containing some challenging images extracted from the challenge videos.
 
 <BR><BR>
@@ -117,10 +121,11 @@ The goals / steps of this project are the following:
 * Image output: 
 * ![alt text][image6]
 
-### - Fit lane lines.<a name="pl7"></a>
+### - Detect and Fit lane lines.<a name="pl7"></a>
 * Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L593-L628)
 * Description: This was done to determine a good binomial fit for the detected lane lines.
-* Image output: 
+* Image output(s): 
+* ![alt text][image13]
 * ![alt text][image7]
 
 ### - Generate lane lines.<a name="pl8"></a>
@@ -132,8 +137,6 @@ The goals / steps of this project are the following:
 ### - Fill lane lines.<a name="pl9"></a>
 * Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L670-L698)
 * Description: Here, I filled the area in between the left, and the right lane line(s), so that this area was marked clearly.
-* Image output: 
-* ![alt text][image9]
 
 ### - Original image - with lane lines.<a name="pl10"></a>
 * Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L702-L715)
@@ -143,15 +146,13 @@ The goals / steps of this project are the following:
 
 ### - Original image - with calculations.<a name="pl11"></a>
 * Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L720-L782)
-* Description: Here, I performed radius of curvature and vehicle location calculations.
+* Description: Here, I performed radius of curvature and vehicle location calculations. I also marked the center of the lane and the center of the car so that this was easy to visualize.
 * Image output: 
 * ![alt text][image11]
 
 ### - End-to-end pipeline.<a name="pl12"></a>
 * Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L785-L997)
-* Description: Here, I used the techniques described above, to create an end-to-end pipeline which could be used with images and video, and which could also be used to generate visualizations of all the intermediate step(s).
-* Image output: 
-* ![alt text][image12]
+* Description: Here, I used the techniques described above, to create an end-to-end pipeline which was then tested on a few sample images, the project video, the challenge video and the harder challenge video.
 
 <BR><BR>
 ---
@@ -167,7 +168,7 @@ The goals / steps of this project are the following:
 ### - Smoothing transitions.<a name="epl2"></a>
 
 * Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L813-L844), and [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L934), and [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L940).
-* Description: If we decide that the current detected polynomial make(s) sense, then we add it to the recent valid history, and then we generate a mean of the recent valid values. This allows the transitions to be smooth, and not 'jumpy'.
+* Description: If we decide that the current detected fit make(s) sense, then we add it to the recent valid history, and then we generate a mean of the recent valid values. This allows the transitions to be smooth, and not 'jumpy'.
 
 ---
 
@@ -188,6 +189,9 @@ The goals / steps of this project are the following:
 ### - Using weighted history.<a name="fw5"></a>
 * Currently, I am keeping a history of past 'X' valid left and right lane points. However, all of these are weighted equally. A better approach, would be to combine this history with a 'decay' mechanism, so that more recent value(s) are given a higher weight, relative to older valid entries.
 
+
+### - Handling temporary lack of lane data<a name="fw5"></a>
+* In the harder challenge video, towards the end, we temporarily have no right lane line. The pipeline would have to be adapted for this scenario because we currently assume that we should be able to threshold in a manner so as to yield a decent lane fit. 
 
 <BR><BR>
 ---
