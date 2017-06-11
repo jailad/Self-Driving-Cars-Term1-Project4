@@ -33,15 +33,15 @@
     5. [Perspective Transform.](#pl5)
     6. [Histogram for lane line detection.](#pl6)
     7. [Fit lane lines.](#pl7)
-    8. [Generate lane lines.](#pl8)
-    9. [Fill lane lines.](#pl9)
-    10. [Original image - with lane lines.](#pl10)
-    11. [Original image - with calculations.](#pl11)
-    12. [Complete pipeline.](#pl12)
+    8. [Generate and fill lane lines.](#pl8)
+    9. [Original image - with lane lines.](#pl10)
+    10. [Original image - with calculations.](#pl11)
+    11. [Complete pipeline.](#pl12)
 4. [Extended pipeline](#epl)
     1. [Rejecting spurious fitting.](#epl1)
     2. [Smoothing transitions.](#epl2)
-5. [Future work](#fw)
+5. [Analyzing trend of fits for project video.](#an)
+6. [Future work](#fw)
     1. [Adaptive region of interest.](#fw1)
     2. [Adaptive thresholding.](#fw2)
     3. [Adaptive smoothing.](#fw4)
@@ -86,72 +86,68 @@ The goals / steps of this project are the following:
 ## Pipeline <a name="pl"></a> :
 
 ### - Camera Calibration. <a name="pl1"></a>
-* Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L137-L184)
+* Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L107-L215)
 * Description: Here, I used OpenCV's 'findChessboardCorners' method to detect object points and image points, followed by OpenCV 'calibrateCamera' to determine the Camera Calibration parameters.
 * Image output:
 * ![alt text][image1]
 
 ### - Distortion Correction.<a name="pl2"></a>
-* Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L192-L223), [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L231-L252)
+* Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L217-L257)
 * Description: Here, I used the calibration parameters along with OpenCV's 'undistort' method to test distortion correction on an image.
 * Image output: 
 * ![alt text][image2]
 
 ### - Thresholded Binary Image.<a name="pl3"></a>
-* Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L261-L317)
+* Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L264-L322)
 * Description: Here, I used a combination of Sobel-X gradient, and S-Channel thresholding to generate a thresholded binary image. I tweaked the thresholding parameter(s) until I was obtaining good results on a wide variety of images.
 * Image output: 
 * ![alt text][image3]
 
 ### - Region Of Interest Selection.<a name="pl4"></a>
-* Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L326-L363)
+* Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L326-L365)
 * Description: Here, I focussed my attention to points of interest, which would be relevant from a lane detection perspective, and then rejected the other points.
 * Image output: 
 * ![alt text][image4]
 
 ### - Perspective Transform.<a name="pl5"></a>
-* Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L367-L386)
+* Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L368-L387)
 * Description: Here, I converted the region of interest image, into a bird's eye view image. This was done, so that the the left and right lane lines, which actually are parallel, appeared parallel as well. This helped in fitting polynomial curves to the detected lane lines.
 * Image output: 
 * ![alt text][image5]
 
 ### - Histogram for lane line detection.<a name="pl6"></a>
-* Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L437-L588)
+* Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L400-L407)
 * Description: This was done to separate the lanes into left and right lanes.
 * Image output: 
 * ![alt text][image6]
 
 ### - Detect and Fit lane lines.<a name="pl7"></a>
-* Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L593-L628)
+* Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L413-L514)
 * Description: This was done to determine a good binomial fit for the detected lane lines.
 * Image output(s): 
 * ![alt text][image13]
 * ![alt text][image7]
 
-### - Generate lane lines.<a name="pl8"></a>
-* Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L633-L667)
-* Description: Here, I used the polynomial fitted above, to synthesize continuous left and right lane lines.
-* Image output: 
+### - Generate and fill lane lines.<a name="pl8"></a>
+* Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L614-L687)
+* Description: Here, I used the polynomial fitted above, to synthesize continuous left and right lane lines. I then filled the area between the lane lines. I also marked the center of the lane and the center of the car so that this was easy to visualize.
+* Image output(s): 
 * ![alt text][image8]
 
-### - Fill lane lines.<a name="pl9"></a>
-* Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L670-L698)
-* Description: Here, I filled the area in between the left, and the right lane line(s), so that this area was marked clearly.
-
 ### - Original image - with lane lines.<a name="pl10"></a>
-* Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L702-L715)
+* Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L1006)
 * Description: Here, I projected back the lane line(s) onto the original image, using an inverse perspective transform.
 * Image output: 
 * ![alt text][image10]
 
 ### - Original image - with calculations.<a name="pl11"></a>
-* Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L720-L782)
-* Description: Here, I performed radius of curvature and vehicle location calculations. I also marked the center of the lane and the center of the car so that this was easy to visualize.
+* Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L705-L774)
+* Description: Here, I performed radius of curvature and vehicle location calculations.
 * Image output: 
 * ![alt text][image11]
 
 ### - End-to-end pipeline.<a name="pl12"></a>
-* Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L785-L997)
+* Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L942-L1020)
 * Description: Here, I used the techniques described above, to create an end-to-end pipeline which was then tested on a few sample images, the project video, the challenge video and the harder challenge video.
 
 <BR><BR>
@@ -161,15 +157,23 @@ The goals / steps of this project are the following:
 
 
 ### - Rejecting spurious fitting.<a name="epl1"></a>
-* Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L927-L940), and [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L874-L887)
+* Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L922-L937)
 * Description: Here, I kept a track of recent valid frame(s) and use a mean of these value(s) to determine if the current bottom most intersection point for the left lane and the right lane make(s) sense. If it does not make sense, then we use a mean of historical value(s). If it makes sense, then we pop the oldest entry, and update the history with this latest valid value.
-
 
 ### - Smoothing transitions.<a name="epl2"></a>
 
-* Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L813-L844), and [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L934), and [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L940).
+* Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L875-L892), and [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L894-L920).
 * Description: If we decide that the current detected fit make(s) sense, then we add it to the recent valid history, and then we generate a mean of the recent valid values. This allows the transitions to be smooth, and not 'jumpy'.
 
+<BR><BR>
+---
+
+## Analyzing trend of fits for project video <a name="an"></a> :
+
+* Code is linked here: [link](https://github.com/jailad/Self-Driving-Cars-Term1-Project4/blob/master/project.py#L1044-L1211).
+* Description: In this section, I analyzed the various fit parameters to assess the trend of left fit coefficients and right fit coefficients as generated by the pipeline for the project video. This was used to tune the logic for validating and smoothing lane detections.
+
+<BR><BR>
 ---
 
 ## Future work <a name="fw"></a> :
